@@ -11,15 +11,16 @@ chrome.tabs.onUpdated.addListener(function() {
       'lastFocusedWindow': true
     }, function(tabs) {
       let activeTab = tabs[0];
-      alert(`activeTab's url: ${activeTab.url}`);
+      let activeTabUrl = activeTab.url;
+
+      // Get blacklisted site urls
+      chrome.storage.local.get("urls", data => {
+        let blacklistedUrls = data.urls;
+
+        // You have the blacklistedUrls. Now you need to check if activeTabUrl
+        // is a blacklistedUrl. If it is, then redirect to some random site.
+        // webRequest API looks promising
+      });
     }
-    // (tabs) => {
-    //   let urls = tabs[0].urls;
-    //   debugger;
-    //   // Get blacklisted urlss
-    //   chrome.storage.sync.get("urls", data => {
-    //     debugger;
-    //   });
-    // }
   );
 });

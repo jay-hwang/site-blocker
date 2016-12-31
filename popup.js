@@ -10,10 +10,12 @@ document.addEventListener('DOMContentLoaded', () => {
     debugger;
     if (blockurls.value) {
       // make sure url is in format: https://www.facebook.com/
-      chrome.storage.local.get({ urls: [] }, data => {
+      chrome.storage.local.get({ urls: {} }, data => {
+        let newUrl = blockurls.value;
         let urls = data.urls;
         debugger;
-        urls.push(blockurls.value);
+
+        urls[newUrl] = newUrl;
         chrome.storage.local.set({ urls: urls }, () => {
 
         });
