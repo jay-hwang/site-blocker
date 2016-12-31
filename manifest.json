@@ -1,0 +1,23 @@
+{
+  "manifest_version": 2,
+
+  "name": "Site Blocker",
+  "description": "This extension blocks sites specified by user",
+  "version": "1.0",
+
+  "browser_action": {
+    "default_icon": "icon.png",
+    "default_popup": "popup.html"
+  },
+
+  "background": {
+    "scripts":["background.js"]
+  },
+
+  "permissions": [
+    "tabs",
+    "activeTab",
+    "storage",
+    "background"
+  ]
+}
