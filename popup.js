@@ -1,17 +1,17 @@
 document.addEventListener('DOMContentLoaded', () => {
-  const form = document.getElementById("block-urls-form");
-  const blockurls = document.getElementById("block-urls");
+  const form = document.getElementById("block-url-form");
+  const blockurl = document.getElementById("block-url");
 
   // Get site and date/time specified by user and store it in chrome.storage.sync
 
   form.addEventListener('submit', e => {
     e.preventDefault();
 
-    if (blockurls.value) {
+    if (blockurl.value) {
       // make sure url is in format: https://www.facebook.com/
       chrome.storage.local.get({ urls: {} }, data => {
         let parser = document.createElement('a');
-        parser.href = blockurls.value;
+        parser.href = blockurl.value;
 
         let newUrl = parser.hostname;
         let urls = data.urls;

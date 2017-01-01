@@ -1,0 +1,23 @@
+body {
+  width: 400px;
+  height: 600px;
+}
+
+.header {
+  margin: 0 auto;
+  text-align: center;
+  background-color: grey;
+}
+
+#block-url-form {
+  width: 90%;
+  margin: 0 auto;
+}
+
+#block-url {
+  width: 100%;
+  height: 30px;
+
+  font-size: 15px;
+  margin-bottom: 20px;
+}

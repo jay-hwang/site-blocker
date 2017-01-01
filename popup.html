@@ -3,14 +3,115 @@
   <head>
     <meta charset="utf-8">
     <title>Site Blocker</title>
+    <link rel="stylesheet" type="text/css" href="popup.css">
     <script src="popup.js"></script>
   </head>
   <body>
-    <h1>Site Blocker</h1>
+    <h1 className='header'>Site Blocker</h1>
 
-    <form id='block-urls-form'>
-      <input id="block-urls" type="text" value="" />
-      <input id="submit-button" type="submit" value="Block urls" />
+    <form id='block-url-form'>
+      <input
+        id="block-url"
+        type="text"
+        value=""
+        placeholder="https://www.google.com/" />
+
+      <div className='blackout-time'>
+        <span>What time(s) would you like to block this site?</span>
+        <div>
+          <span>Start Time</span>
+          <select>
+            <option value='12'>12</option>
+            <option value='1'>1</option>
+            <option value='2'>2</option>
+            <option value='3'>3</option>
+            <option value='4'>4</option>
+            <option value='5'>5</option>
+            <option value='6'>6</option>
+            <option value='7'>7</option>
+            <option value='8'>8</option>
+            <option value='9'>9</option>
+            <option value='10'>10</option>
+            <option value='11'>11</option>
+          </select>
+
+          <select>
+            <option value="am">AM</option>
+            <option value="pm">PM</option>
+          </select>
+
+          <select>
+            <option value="00">00</option>
+            <option value="15"></option>
+            <option value="30"></option>
+            <option value="45"></option>
+          </select>
+        </div>
+
+        <div>
+          <span>End Time</span>
+          <select>
+            <option value='12'>12</option>
+            <option value='1'>1</option>
+            <option value='2'>2</option>
+            <option value='3'>3</option>
+            <option value='4'>4</option>
+            <option value='5'>5</option>
+            <option value='6'>6</option>
+            <option value='7'>7</option>
+            <option value='8'>8</option>
+            <option value='9'>9</option>
+            <option value='10'>10</option>
+            <option value='11'>11</option>
+          </select>
+
+          <select>
+            <option value="am">AM</option>
+            <option value="pm">PM</option>
+          </select>
+
+          <select>
+            <option value="00">00</option>
+            <option value="15"></option>
+            <option value="30"></option>
+            <option value="45"></option>
+          </select>
+        </div>
+      </div>
+
+      <span>Which days would you like to block this site?</span>
+      <div className='active-days'>
+        <input
+          id="active-day"
+          type="checkbox"
+          value="monday" /> Monday
+        <input
+          id="active-day"
+          type="checkbox"
+          value="tuesday" /> Tuesday
+        <input
+          id="active-day"
+          type="checkbox"
+          value="wednesday" /> Wednesday
+        <input
+          id='active-day'
+          type='checkbox'
+          value='thursday' /> Thursday
+        <input
+          id='active-day'
+          type='checkbox'
+          value='friday' /> Friday
+        <input
+          id='active-day'
+          type='checkbox'
+          value='saturday' /> Saturday
+        <input
+          id='active-day'
+          type='checkbox'
+          value='sunday' /> Sunday
+      </div>
+
+      <input id="submit-button" type="submit" value="Block This Site" />
     </form>
   </body>
 </html>
