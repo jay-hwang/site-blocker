@@ -20,7 +20,7 @@
         <span>What time(s) would you like to block this site?</span>
         <div>
           <span>Start Time</span>
-          <select>
+          <select id='start-hour'>
             <option value='12'>12</option>
             <option value='1'>1</option>
             <option value='2'>2</option>
@@ -35,22 +35,22 @@
             <option value='11'>11</option>
           </select>
 
-          <select>
+          <select id='start-timestamp'>
             <option value="am">AM</option>
             <option value="pm">PM</option>
           </select>
 
-          <select>
+          <select id='start-minute'>
             <option value="00">00</option>
-            <option value="15"></option>
-            <option value="30"></option>
-            <option value="45"></option>
+            <option value="15">15</option>
+            <option value="30">30</option>
+            <option value="45">45</option>
           </select>
         </div>
 
         <div>
           <span>End Time</span>
-          <select>
+          <select id='end-hour'>
             <option value='12'>12</option>
             <option value='1'>1</option>
             <option value='2'>2</option>
@@ -65,16 +65,16 @@
             <option value='11'>11</option>
           </select>
 
-          <select>
+          <select id='end-timestamp'>
             <option value="am">AM</option>
             <option value="pm">PM</option>
           </select>
 
-          <select>
+          <select id='end-minute'>
             <option value="00">00</option>
-            <option value="15"></option>
-            <option value="30"></option>
-            <option value="45"></option>
+            <option value="15">15</option>
+            <option value="30">30</option>
+            <option value="45">45</option>
           </select>
         </div>
       </div>
@@ -82,33 +82,33 @@
       <span>Which days would you like to block this site?</span>
       <div className='active-days'>
         <input
-          id="active-day"
+          id='sunday'
+          type='checkbox'
+          value='0' /> Sunday
+        <input
+          id="monday"
           type="checkbox"
-          value="monday" /> Monday
+          value="1" /> Monday
         <input
-          id="active-day"
+          id="tuesday"
           type="checkbox"
-          value="tuesday" /> Tuesday
+          value="2" /> Tuesday
         <input
-          id="active-day"
+          id="wednesday"
           type="checkbox"
-          value="wednesday" /> Wednesday
+          value="3" /> Wednesday
         <input
-          id='active-day'
+          id='thursday'
           type='checkbox'
-          value='thursday' /> Thursday
+          value='4' /> Thursday
         <input
-          id='active-day'
+          id='friday'
           type='checkbox'
-          value='friday' /> Friday
+          value='5' /> Friday
         <input
-          id='active-day'
+          id='saturday'
           type='checkbox'
-          value='saturday' /> Saturday
-        <input
-          id='active-day'
-          type='checkbox'
-          value='sunday' /> Sunday
+          value='6' /> Saturday
       </div>
 
       <input id="submit-button" type="submit" value="Block This Site" />
