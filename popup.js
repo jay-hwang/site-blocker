@@ -7,17 +7,32 @@ document.addEventListener('DOMContentLoaded', () => {
   form.addEventListener('submit', e => {
     e.preventDefault();
 
-    debugger;
     if (blockurls.value) {
       // make sure url is in format: https://www.facebook.com/
       chrome.storage.local.get({ urls: {} }, data => {
-        let newUrl = blockurls.value;
+        let parser = document.createElement('a');
+        parser.href = blockurls.value;
+
+        let newUrl = parser.hostname;
         let urls = data.urls;
         debugger;
 
         urls[newUrl] = newUrl;
         chrome.storage.local.set({ urls: urls }, () => {
-
+          window.close();
+          // chrome.storage.local.get("urls", data2 => {
+          //   let blacklistedUrls = [];
+          //   let data2Urls = data2.urls;
+          //
+          //   debugger;
+          //
+          //   Object.keys(data2Urls).forEach(k => {
+          //     blacklistedUrls.push(data2Urls[k]);
+          //   });
+          //
+          //   debugger;
+          // });
+          //
         });
       });
     }
