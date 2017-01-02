@@ -1,75 +1,58 @@
-// On chrome.tabs.onUpdated, get urls of current tab.
-// If current urls === any of blacklisted urlss in chrome.storage,
-//   if current time matches blackout times, redirect elsewhere
-// chrome.tabs.onUpdated.addListener(function() {
-//   chrome.tabs.query(
-//     {
-//       'active': true,
-//       'lastFocusedWindow': true
-//     },
-//     function(tabs) {
-//       let activeTab = tabs[0];
-//       let activeTabUrl = activeTab.url;
-//
-//       // Get blacklisted site urls
-//       chrome.storage.local.get("urls", data => {
-//         let blacklistedUrls = data.urls;
-//
-//         // You have the blacklistedUrls. Now you need to check if activeTabUrl
-//         // is a blacklistedUrl. If it is, then redirect to some random site.
-//         // webRequest API looks promising
-//         // if (blacklistedUrls[activeTabUrl]) {
-//           // alert(`blacklistedUrls[activeTabUrl]: ${blacklistedUrls[activeTabUrl]}`);
-//           // chrome.tabs.update({ url: "https://www.google.com" });
-//           chrome.webRequest.onBeforeRequest.addListener(
-//             function(details) {
-//               return { cancel: true };
-//             },
-//             { urls: ["*://www.netflix.com/*"] },
-//             ["blocking"]
-//           );
-//         // }
-//
-//       });
-//     }
-//   );
-// });
+chrome.storage.local.get("blacklistedUrls", data => {
+  let blacklistedUrls = data.blacklistedUrls;
 
+  chrome.tabs.onUpdated.addListener(function() {
+    chrome.tabs.query({'active': true, 'lastFocusedWindow': true}, function (tabs) {
+      var currentUrl = tabs[0].url;
+      let parser = document.createElement('a');
+      parser.href = currentUrl;
+      let currentHostname = parser.hostname;
+      let blacklistedHostnames = [];
 
-chrome.storage.local.get("urls", data => {
-  let blacklistedUrls = [];
-  let dataUrls = data.urls;
+      Object.keys(blacklistedUrls).forEach(hostname => {
+        let parsedHostname = `*://${hostname}/*`;
+        let blacklistedUrl = blacklistedUrls[hostname];
+        blacklistedHostnames.push(parsedHostname);
 
-  Object.keys(dataUrls).forEach(k => {
-    let parsed = `*://www.${k}/*`;
-    let parsed2 = `*://${k}/*`;
+        let currentDate = new Date();
+        let currentDay = currentDate.getDay();
+        let currentHour = currentDate.getHours();
+        let currentMinute = currentDate.getMinutes();
 
-    blacklistedUrls.push(parsed);
-    blacklistedUrls.push(parsed2);
+        if (blacklistedUrl.hostname === currentHostname) {
+          // compare blacklistedUrl.blackoudDays and Time to currentDay and Time
+          if (blacklistedUrl.blackoutDays.includes(currentDay)) {
+            // compare currentHour and minute to blackoutTimeStart and End
+            let startHour = blacklistedUrl.blackoutTimeStart[0],
+                endHour = blacklistedUrl.blackoutTimeEnd[0],
+                startMinute = blacklistedUrl.blackoutTimeStart[1],
+                endMinute = blacklistedUrl.blackoutTimeEnd[1];
+
+            if (currentHour >= startHour && currentHour < endHour) {
+              chrome.webRequest.onBeforeRequest.addListener(
+                function(details) {
+                  return { cancel: true };
+                },
+                { urls: blacklistedHostnames },
+                ["blocking"]
+              );
+            } else if (currentHour === endHour) {
+              if (currentMinute >= startMinute && currentMinute < endMinute) {
+                // alert(`blacklistedHostnames: ${blacklistedHostnames}`);
+                // do something
+                chrome.webRequest.onBeforeRequest.addListener(
+                  function(details) {
+                    return { cancel: true };
+                  },
+                  { urls: blacklistedHostnames },
+                  ["blocking"]
+                );
+              }
+            }
+          }
+        }
+      });
+    });
   });
 
-  // You have the blacklistedUrls. Now you need to check if activeTabUrl
-  // is a blacklistedUrl. If it is, then redirect to some random site.
-  // webRequest API looks promising
-  // if (blacklistedUrls[activeTabUrl]) {
-    // alert(`blacklistedUrls[activeTabUrl]: ${blacklistedUrls[activeTabUrl]}`);
-    // chrome.tabs.update({ url: "https://www.google.com" });
-
-    chrome.webRequest.onBeforeRequest.addListener(
-      function(details) {
-        return { cancel: true };
-      },
-      { urls: blacklistedUrls },
-      ["blocking"]
-    );
-  // }
-
 });
-//
-// chrome.webRequest.onBeforeRequest.addListener(
-//   function(details) {
-//     return {cancel: true};
-//   },
-//   {urls: []},
-//   ["blocking"]
-// );

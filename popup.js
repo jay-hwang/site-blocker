@@ -1,6 +1,7 @@
 document.addEventListener('DOMContentLoaded', () => {
   const form = document.getElementById("block-url-form");
   const blockurl = document.getElementById("block-url");
+  const resetBlacklist = document.getElementById("reset-blacklist");
 
   // Get site and date/time specified by user and store it in chrome.storage.sync
 
@@ -61,17 +62,15 @@ document.addEventListener('DOMContentLoaded', () => {
       sunday
     ];
 
-    debugger;
-
     if (blockurl.value) {
-      // make sure url is in format: https://www.facebook.com/
-      chrome.storage.local.get({ urls: {} }, data => {
-        let urls = data.urls;
+      // raise error unless url is in format: https://www.example.com/
+      chrome.storage.local.get({ blacklistedUrls: {} }, data => {
+        let blacklistedUrls = data.blacklistedUrls;
 
         let parser = document.createElement('a');
         parser.href = blockurl.value;
+        let hostname = parser.hostname;
 
-        let newUrl = parser.hostname;
         let blackoutDays = [];
 
         let startHour = START_HOUR;
@@ -83,15 +82,18 @@ document.addEventListener('DOMContentLoaded', () => {
           if (day.checked) { blackoutDays.push(parseInt(day.value)); }
         });
 
+
+        // blacklistedUrls[hostname] = hostname;
+        blacklistedUrls[hostname] = {
+          hostname: hostname,
+          blackoutDays: blackoutDays,
+          blackoutTimeStart: [startHour, startMinute],
+          blackoutTimeEnd: [endHour, endMinute]
+        };
+
         debugger;
 
-        urls[newUrl] = newUrl;
-
-        // urls[newUrl] = {
-        //   url: newUrl
-        // };
-
-        chrome.storage.local.set({ urls: urls }, () => {
+        chrome.storage.local.set({ blacklistedUrls: blacklistedUrls }, () => {
           window.close();
           // chrome.storage.local.get("urls", data2 => {
           //   let blacklistedUrls = [];
@@ -110,4 +112,11 @@ document.addEventListener('DOMContentLoaded', () => {
       });
     }
   });
+
+  resetBlacklist.addEventListener('click', () => {
+    chrome.storage.local.set({ blacklistedUrls: {} }, () => {
+      window.close();
+    });
+  });
+
 });
