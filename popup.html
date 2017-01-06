@@ -35,16 +35,16 @@
             <option value='11'>11</option>
           </select>
 
-          <select id='start-timestamp'>
-            <option value="am">AM</option>
-            <option value="pm">PM</option>
-          </select>
-
           <select id='start-minute'>
             <option value="00">00</option>
             <option value="15">15</option>
             <option value="30">30</option>
             <option value="45">45</option>
+          </select>
+
+          <select id='start-period'>
+            <option value="am">AM</option>
+            <option value="pm">PM</option>
           </select>
         </div>
 
@@ -65,16 +65,16 @@
             <option value='11'>11</option>
           </select>
 
-          <select id='end-timestamp'>
-            <option value="am">AM</option>
-            <option value="pm">PM</option>
-          </select>
-
           <select id='end-minute'>
             <option value="00">00</option>
             <option value="15">15</option>
             <option value="30">30</option>
             <option value="45">45</option>
+          </select>
+
+          <select id='end-period'>
+            <option value="am">AM</option>
+            <option value="pm">PM</option>
           </select>
         </div>
       </div>
@@ -115,5 +115,7 @@
     </form>
 
     <button id="reset-blacklist">Reset Blacklists</button>
+
+    <button id='list-blacklist'>List blacklist</button>
   </body>
 </html>
